@@ -6,6 +6,33 @@
 # Proyecto Gestion de Cursos
 
 ## Descripción General
+El proyecto consiste en una plataforma de administración académica que permite gestionar cursos y usuarios. Desde la interfaz del administrador, es posible realizar acciones como inscribir alumnos, consultar calificaciones, eliminar registros, monitorear el acceso al sistema (usuarios activos o inactivos), restablecer contraseñas vía correo electrónico y actualizar datos de perfiles.
+
+Adicionalmente, el sistema facilita la creación de cursos personalizables, los cuales pueden organizarse en módulos de talleres. Cada taller integra elementos como cuestionarios interactivos, recursos educativos y material audiovisual, todos modificables o eliminables según sea necesario. La plataforma incluye un buscador intuitivo con navegación paginada para optimizar la experiencia. Asimismo, los administradores pueden asignar fechas de expiración específicas para el acceso de cada usuario a los cursos.
+
+Desde la perspectiva del estudiante, los usuarios pueden acceder a su perfil para editar información personal, actualizar su contraseña, participar en cursos activos y completar talleres asignados. El sistema genera automáticamente reportes de calificaciones enviados por correo electrónico y proporciona enlaces personalizados para recuperar credenciales de acceso en caso de olvido.
+
+![1](https://github.com/user-attachments/assets/d8c96c73-cbfe-4db0-a3ea-110228cdc90a)
+
+
+![2](https://github.com/user-attachments/assets/303f884f-2123-4b05-a4a7-6dd287cfbb80)
+
+
+![3](https://github.com/user-attachments/assets/8ec81407-a21f-4f72-925c-1122fef8580e)
+
+
+
+![4](https://github.com/user-attachments/assets/e953bf14-18da-4b12-b1d5-81b36142686b)
+
+
+
+![5](https://github.com/user-attachments/assets/f3da3dd3-582d-4e7b-a469-e103a55a81a1)
+
+
+
+![6](https://github.com/user-attachments/assets/18621ccc-2d59-4c94-9ab9-27c0b238392a)
+
+
 
 Proyecto modelo de plataforma educativa de cursos; desarrollada con React en el frontend y PHP/MySQL en el backend. 
 Resumen detallado de la estructura y funcionalidades del proyecto:

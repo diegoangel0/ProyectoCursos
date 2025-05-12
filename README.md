@@ -3,11 +3,12 @@
 
 
           
-# Proyecto PlataformaCursos
+# Proyecto Gestion de Cursos
 
 ## Descripción General
 
-Proyecto Plataforma educativa de cursos; plataforma desarrollada con React en el frontend y PHP/MySQL en el backend. Resumen detallado de la estructura y funcionalidades del proyecto:
+Proyecto modelo de plataforma educativa de cursos; desarrollada con React en el frontend y PHP/MySQL en el backend. 
+Resumen detallado de la estructura y funcionalidades del proyecto:
 
 ### Tecnologías Principales
 

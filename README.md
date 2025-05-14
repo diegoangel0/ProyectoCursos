@@ -39,7 +39,7 @@ Resumen detallado de la estructura y funcionalidades del proyecto:
 
 ### Tecnologías Principales
 
-- **Frontend**: React.js (v16.13.1)
+- **Frontend**: React.js 
 - **Backend**: PHP con Apache
 - **Base de datos**: MySQL
 - **Gestión de paquetes**: npm y yarn

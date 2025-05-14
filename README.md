@@ -599,5 +599,219 @@ rm apis/creando_user.php
     +-----------------------+ +-------------+ +-----------------------+
 ```
 
+
+# Diagramas
+
+## Diagrama General y Workflows
+
+## Diagrama General del Sistema
+
+```mermaid
+flowchart TB
+    subgraph PLATAFORMA["PLATAFORMA DE CURSOS"]
+        subgraph CAPAS["CAPAS DEL SISTEMA"]
+            direction LR
+            subgraph CLIENTE["CAPA CLIENTE (Frontend)"]
+                direction TB
+                REACT["React SPA"]
+                BOOTSTRAP["Bootstrap 5"]
+                AXIOS["Axios"]
+            end
+            
+            subgraph SERVIDOR["CAPA SERVIDOR (Backend)"]
+                direction TB
+                PHP["PHP APIs"]
+                APACHE["Apache 2.4"]
+                JWT["JWT Auth"]
+            end
+            
+            subgraph DATOS["CAPA DE DATOS (Database)"]
+                direction TB
+                MYSQL["MySQL"]
+                INNODB["InnoDB"]
+            end
+        end
+        
+        subgraph MODULOS["MÓDULOS PRINCIPALES"]
+            direction LR
+            subgraph AUTH["AUTENTICACIÓN"]
+                direction TB
+                LOGIN["• Login"]
+                REGISTRO["• Registro"]
+                RECUPERACION["• Recuperación de contraseña"]
+            end
+            
+            subgraph ACADEMICA["GESTIÓN ACADÉMICA"]
+                direction TB
+                CURSOS["• Cursos"]
+                TALLERES["• Talleres"]
+                CUESTIONARIOS["• Cuestionarios"]
+                CALIFICACIONES["• Calificaciones"]
+                PERFIL["• Perfil de Usuario"]
+            end
+            
+            subgraph ADMIN["ADMINISTRACIÓN"]
+                direction TB
+                USUARIOS["• Gestión de Usuarios"]
+                CREACION_CURSOS["• Creación de Cursos"]
+                REPORTES["• Reportes de Notas"]
+                MONITOREO["• Monitoreo de Actividad"]
+            end
+        end
+    end
+```
+
+
+ ## Workflow de Autenticación:
+```mermaid
+sequenceDiagram
+    actor Usuario
+    participant Form as Formulario Login/Registro
+    participant API as API PHP Auth
+    participant DB as Base de Datos MySQL
+    
+    Usuario->>Form: Ingresa datos
+    Form->>API: Envía credenciales
+    API->>DB: Verifica datos
+    DB->>API: Respuesta
+    Note over API: Genera JWT
+    API->>Form: Devuelve token
+    Form->>Usuario: Acceso concedido
+    Note over Usuario: Almacena token
+```
+
+## Workflow de Gestión de Cursos:
+```mermaid
+sequenceDiagram
+    actor Admin as Administrador
+    participant Panel as Panel Admin
+    participant API as API PHP Admin
+    participant DB as Base de Datos MySQL
+    
+    Admin->>Panel: Accede al panel
+    Panel->>API: Verifica token
+    API->>Panel: Confirma acceso
+    Admin->>Panel: Crea/edita curso
+    Panel->>API: Envía datos curso
+    API->>DB: Almacena datos
+    DB->>API: Confirmación
+    API->>Panel: Notifica éxito
+    Panel->>Admin: Visualiza curso
+ ```   
+
+## Workflow de Acceso a Cursos:
+```mermaid
+sequenceDiagram
+    actor Estudiante
+    participant Portal as Portal Estudiante
+    participant API as API PHP Cursos
+    participant DB as Base de Datos MySQL
+    
+    Estudiante->>Portal: Accede al portal
+    Portal->>API: Solicita cursos
+    API->>DB: Verifica acceso
+    DB->>API: Datos cursos
+    API->>Portal: Muestra cursos
+    Estudiante->>Portal: Selecciona curso
+    Portal->>API: Solicita talleres
+    API->>DB: Verifica caducidad
+    DB->>API: Datos talleres
+    API->>Portal: Muestra talleres
+```
+
+## Workflow de Resolución de Talleres:
+```mermaid
+sequenceDiagram
+    actor Estudiante
+    participant Taller as Taller Interactivo
+    participant API as API PHP Talleres
+    participant DB as Base de Datos MySQL
+    
+    Estudiante->>Taller: Accede al taller
+    Taller->>API: Solicita datos
+    API->>DB: Obtiene preguntas
+    DB->>API: Datos cuestionario
+    API->>Taller: Muestra preguntas
+    Estudiante->>Taller: Responde preguntas
+    Taller->>API: Envía respuestas
+    Note over API: Calcula nota
+    API->>DB: Almacena nota
+    API->>Taller: Muestra resultado
+    Taller->>Estudiante: Visualiza nota
+```
+
+## Workflow de Gestión de Perfil:
+```mermaid
+sequenceDiagram
+    actor Usuario
+    participant Perfil as Perfil Usuario
+    participant API as API PHP Perfil
+    participant DB as Base de Datos MySQL
+    
+    Usuario->>Perfil: Accede al perfil
+    Perfil->>API: Solicita datos
+    API->>DB: Obtiene perfil
+    DB->>API: Datos usuario
+    API->>Perfil: Muestra perfil
+    Usuario->>Perfil: Edita información
+    Perfil->>API: Envía cambios
+    API->>DB: Actualiza datos
+    DB->>API: Confirmación
+    API->>Perfil: Notifica éxito
+    Perfil->>Usuario: Visualiza cambios
+```
+
+## Diagrama de la estructura de la base de datos:
+```mermaid
+erDiagram
+    USERS {
+        int id
+        string email
+        string password
+        string rol
+        string nombres
+        string apellidos
+        string telefono
+        string tkn_accs
+    }
+    
+    CURSOS {
+        int id_curso
+        string nombre
+        string descripcion
+        string imagen
+    }
+    
+    TALLERES {
+        int id_taller
+        string nombre_taller
+        string descripcion
+        int id_curso
+        int id_cuestionario
+    }
+    
+    CADUCIDAD_CURSOS {
+        int id_curso
+        int id_usuario
+        date caducidad_acceso
+    }
+    
+    NOTAS {
+        int id_nota
+        int id_estudiante
+        int id_taller
+        int id_curso
+        float nota
+    }
+    
+    USERS ||--o{ CADUCIDAD_CURSOS : tiene
+    CURSOS ||--o{ CADUCIDAD_CURSOS : asignado
+    CURSOS ||--o{ TALLERES : contiene
+    TALLERES ||--o{ NOTAS : genera
+    USERS ||--o{ NOTAS : recibe
+
+```
+
+
 ## Resumen
 La Visión general del sistema de gestión de cursos, incluimos los diagramas de casos de uso para registro de usuario, creación de cursos y talleres, así como un diagrama de casos de uso completo. También se adiciona una ficha con los requerimientos funcionales y no funcionales, un diagrama de clases que muestra las principales entidades del sistema y sus relaciones, y un diagrama de paquetes que ilustra la arquitectura general del sistema.
